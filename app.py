@@ -1,5 +1,4 @@
 from flask import Flask, redirect, render_template, request, session, g, jsonify
-from flask_session import Session
 import sqlite3
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
@@ -12,10 +11,6 @@ from email.message import EmailMessage
 
 app = Flask(__name__)
 app.secret_key = "cfbe4bd7a14b04e80181d0ec20237f7f76eebe3f34efc4a1604f35547738e76c"
-
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 
 EMAIL = "mealsofgratitudetesting@gmail.com"
 APP_PASSWORD = "mucd lnli mrzf wywu"
