@@ -333,6 +333,8 @@ def teachers_reward_signup():
         email = request.form.get("email")
         id = request.form.get("id")
         reward_type = request.form.get("reward_type")
+        if not (name and email and id and reward_type):
+            return redirect("/teachers/reward-signup")
         if reward_type not in ["meals", "gift_cards"]:
             return redirect("/teachers/reward-signup")
         query_db("INSERT OR IGNORE INTO teachers (name, email) VALUES (?, ?)", (name, email))
@@ -384,6 +386,8 @@ def upload_recipe():
         ingredients = request.form.get("ingredients")
         instructions = request.form.get("instructions")
         creator = request.form.get("creator_name")
+        if not (recipe_name and ingredients and instructions and creator):
+            return redirect("/recipes")
         creator_id = query_db("SELECT id FROM volunteers WHERE name = ?", (creator,), one=True)["id"]
         image = request.files.get("image")
         if image and image.filename != "":
@@ -450,6 +454,8 @@ def add_volunteer():
         name = request.form.get("name")
         email = request.form.get("email")
         phone = request.form.get("phone")
+        if not (name and email and phone):
+            return redirect("/admin/volunteers/")
         today = datetime.today().date()
         query_db("INSERT INTO volunteers (name, email, phone, date_added) VALUES (?, ?, ?, ?)", (name, email, phone, today.isoformat()))
         return redirect("/admin/volunteers/")
@@ -472,6 +478,8 @@ def logout():
 def set_volunteer_code():
     if request.method == "POST":
         new_code = request.form.get("code")
+        if not new_code:
+            return redirect("/admin")
         query_db("INSERT INTO volunteer_codes (code) VALUES (?)", (new_code,))
         return redirect("/admin")
     else:
@@ -482,6 +490,8 @@ def set_volunteer_code():
 def set_teacher_code():
     if request.method == "POST":
         new_code = request.form.get("code")
+        if not new_code:
+            return redirect("/admin")
         query_db("INSERT INTO teacher_codes (code) VALUES (?)", (new_code,))
         return redirect("/admin")
     else:
@@ -525,7 +535,7 @@ def admin_edit_meal(mealid):
         action = request.form.get("action")
         if action == "delete":
             query_db("DELETE FROM meals WHERE id = ?", (id,))
-        else:
+        elif action == "edit":
             date = request.form.get("date")
             recipe_id = request.form.get("recipe_id")
             query_db("UPDATE meals SET date = ?, recipe_id = ? WHERE id = ?", (date, recipe_id, id))
@@ -552,7 +562,7 @@ def admin_edit_gc(gcid):
         action = request.form.get("action")
         if action == "delete":
             query_db("DELETE FROM gift_cards WHERE id = ?", (id,))
-        else:
+        elif action == "edit":
             date = request.form.get("date")
             gc_name = request.form.get("gc_name")
             query_db("UPDATE gift_cards SET name = ?, date = ? WHERE id = ?", (gc_name, date, id))
