@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    View Rankings
+{% endblock %}
+
+{% block body %}
+    <h1>Volunteer Rankings</h1>
+    <table class="table table-striped w-50 table-bordered container">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Number of Rewards</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for volunteer in volunteers|sort(reverse=true, attribute="reward_count") %}
+                <tr>
+                    <td>{{ volunteer.name }}</td>
+                    <td>{{ volunteer.reward_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>Recipe Rankings</h1>
+    <table class="table table-striped w-50 table-bordered container">
+        <thead>
+            <tr>
+                <th>Recipe Name</th>
+                <th># of Times Used</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes|sort(reverse=true, attribute="count") %}
+                <tr>
+                    <td><a href="/recipes/{{ recipe.id }}">{{ recipe.recipe_name }}</a> ({{ recipe.volunteer_name }})</td>
+                    <td>{{ recipe.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

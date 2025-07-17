@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Deadlines
+{% endblock %}
+
+{% block body %}
+    <h1>Edit Deadlines</h1>
+    <form method="POST" action="/admin/deadlines/edit-{{ deadline.id }}" class="container" id="volunteer-date-form">
+        <div class="mb-3">
+            <label for="month" class="form-label">Month</label>
+            <input type="month" id="month" name="month" required value="{{ deadline.month_year }}" class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="volunteer-deadline" class="form-label">Volunteer Deadline</label>
+            <input type="date" id="volunteer-deadline" name="deadline" value="{{ deadline.volunteer_end }}" required class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="range-start" class="form-label">Drop-off Start</label>
+            <input type="date" id="range-start" name="range_start" value="{{ deadline.dropoff_start }}" required class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="range-end" class="form-label">Drop-off End</label>
+            <input type="date" id="range-end" name="range_end" value="{{ deadline.dropoff_end }}" required class="form-control"> 
+        </div>
+        <button type="submit" name="action" value="edit" class="btn btn-warning mb-2">Update Dates</button>
+        <button type="submit" name="action" value="delete" class="btn btn-danger">Delete Month's Deadlines</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Recipes
+{% endblock %}
+
+{% block body %}
+    <h1>Recipes</h1>
+    <ul class="text-start fs-3">
+    {% for recipe in recipes %}
+        <li>
+            <a href="/recipes/{{ recipe.id }}">{{recipe.recipe_name}}</a> ({{ recipe.volunteer_name }})
+            <a href="/admin/edit-recipe-{{ recipe.id }}" class="btn btn-primary">Edit/delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

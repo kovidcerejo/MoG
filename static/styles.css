@@ -1,0 +1,39 @@
+#volunteer-form {
+    max-width: 250px;
+}
+#admin-form {
+    max-width: 250px;
+}
+#admin-volunteer-form {
+    max-width: 250px;
+}
+#meal-edit-form {
+    max-width: 250px;
+}
+#gc-edit-form {
+    max-width: 250px;
+}
+#volunteer-code-form {
+    max-width: 250px;
+}
+#set-code-form {
+    max-width: 250px;
+}
+#volunteer-date-form {
+    max-width: 250px;
+}
+#upload-recipe {
+    max-width: 40%;
+}
+.recipe-image {
+    max-width: 30%;
+    height: auto;
+}
+.small-image {
+    max-height: 100px;
+    width: auto;
+}
+.inherit {
+    font-family: inherit;
+    font-size: inherit;
+}

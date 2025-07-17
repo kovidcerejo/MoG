@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Give Feedback
+{% endblock %}
+  
+{% block body %}
+    <h1>Give Feedback</h1>
+    <form class="container" action="/teachers/give-feedback" method="POST" id="upload-recipe">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" required placeholder="Name" id="name" class="form-control" autocomplete="name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" required placeholder="Email" id="email" class="form-control" autocomplete="email">
+        </div>
+        <div class="mb-3">
+            <label for="feedback" class="form-label">Feedback/Comments</label>
+            <textarea id="feedback" class="form-control" name="feedback" placeholder="Feedback/Comments" required rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

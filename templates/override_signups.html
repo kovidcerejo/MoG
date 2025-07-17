@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Override Meal Signups
+{% endblock %}
+
+{% block body %}
+    <h1>Current Signups</h1>
+    <h3>Meals</h3>
+    <a href="/admin/add-meal" class="btn btn-primary mb-2">Add Meal</a>
+    <table class="container table table-striped w-75 table-bordered">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Meal Name</th>
+                <th>Drop-off Date</th>
+                <th>Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meal in meals %}
+                <tr>
+                    <td>{{ meal.volunteer_name }}</td>
+                    <td>{{ meal.meal_name }}</td>
+                    <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
+                    <td>
+                        <a href="/admin/edit-meal-{{ meal.meal_id}}" class="btn btn-warning">Edit/Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Gift Cards</h3>
+    <a href="/admin/add-gc" class="btn btn-primary mb-2">Add GC</a>
+    <table class="container table table-striped w-75 table-bordered">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Gift Card Name</th>
+                <th>Drop-off Date</th>
+                <th>Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gc in gcs %}
+                <tr>
+                    <td>{{ gc.volunteer_name }}</td>
+                    <td>{{ gc.gc_name }}</td>
+                    <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
+                    <td>
+                        <a href="/admin/edit-gc-{{ gc.gc_id }}" class="btn btn-warning">Edit/Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

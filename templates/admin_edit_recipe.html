@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Edit Recipe
+{% endblock %}
+
+{% block body %}
+    <h1>Edit Recipe</h1>
+    {% if recipe.image_url %}
+        <img src="{{ url_for('static', filename=recipe.image_url) }}" class="small-image mb-2">
+    {% endif %}
+    <form action="/admin/edit-recipe-{{ recipe.id }}" method="POST" class="container" id="upload-recipe" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="recipe_name" class="form-label">Recipe Name</label>
+            <input type="text" autocomplete="off" id="recipe_name" name="recipe_name" value="{{ recipe.name }}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients</label>
+            <textarea id="ingredients" class="form-control" name="ingredients" required rows="8">{{ recipe.ingredients }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="instructions" class="form-label">Instructions</label>
+            <textarea id="instructions" class="form-control" name="instructions" required rows="8">{{ recipe.instructions }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image-upload" class="form-label">Change image</label>
+            <input type="file" id="image-upload" class="form-control" name="image" accept="image/*">
+        </div>
+        <button type="submit" name="action" value="edit" class="btn btn-primary">Update Recipe</button>
+        <button type="submit" name="action" value="delete" class="btn btn-danger">Delete Recipe</button>
+    </form>
+{% endblock %}

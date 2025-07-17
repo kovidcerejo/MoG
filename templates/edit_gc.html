@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Meal
+{% endblock %}
+
+{% block body %}
+    {% if date.volunteer_start <= today and today <= date.volunteer_end and date.month_year.month == gc.date.month %}
+        <h1>Edit/Delete the meal you signed up for</h1>
+        <h4>Volunteer Name: {{ gc.volunteer_name }}</h4>
+        <form method="POST" action="/volunteers/signups/edit-gc-{{ gc.gc_id }}" class="container" id="gc-edit-form">
+            <div class="mb-3">
+                <label for="gc-name" class="form-label">Gift Card Name</label>
+                <input type="text" name="gc_name" class="form-control" value="{{ gc.gc_name }}" placeholder="{{ gc.gc_name }}" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Drop-off Date</label>
+                <input type="date" name="date" value="{{ gc.date }}" class="form-control" id="date" min="{{ start }}" max="{{ end }}" required>
+            </div>
+            <input type="hidden" name="id" value="{{ gc.gc_id }}">
+            <button type="submit" name="action" value="edit" class="btn mb-3 btn-primary">Confirm Edit</button>
+            <button type="submit" name="action" value="delete" class="btn btn-danger">Delete Signup</button>
+        </form>
+    {% else %}
+        <h1>Edit Deadline Passed</h1>
+        <p class="fs-5">Sorry, the deadline for editing this signup has passed.</p>
+        <a href="/volunteers" class="btn btn-primary">Volunteer Home</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Reward Signup
+{% endblock %}
+
+{% block body %}
+    {% if dates.teacher_start and dates.teacher_start <= today %}
+        <h1>Meal Signup</h1>
+        <table class="container table table-striped w-50 table-bordered">
+            <thead>
+                <th>Meal Name</th>
+                <th>Drop-off Date</th>
+                <th>
+                    {% if today <= dates.teacher_end %}
+                        Signup
+                    {% else %}
+                        Teacher Signed Up
+                    {% endif %}
+                </th>
+            </thead>
+            <tbody>
+                {% for meal in meals %}
+                    <tr>
+                        <td><a href="/recipes/{{ meal.recipe_id }}">{{ meal.meal_name }}</a></td>
+                        <td>{{ meal.date.strftime("%b") }} {{ meal.date.day }}</td>
+                        <td>
+                            {% if today <= dates.teacher_end %}
+                                {% if meal.teacher_name is none %}
+                                    <form action="/teachers/reward-signup" method="POST" class="container">
+                                        <input type="text" name="name" required placeholder="Full Name" autocomplete="name" class="form-control mb-1">
+                                        <input type="email" name="email" required placeholder="Email" autocomplete="email" class="form-control mb-2">
+                                        <input type="hidden" name="id" value="{{ meal.meal_id }}">
+                                        <input type="hidden" name="reward_type" value="meals">
+                                        <button type="submit" class="btn btn-primary">Sign up</button>
+                                    </form>
+                                {% else %}
+                                    Signed up for by {{ meal.teacher_name }}.
+                                {% endif %}
+                            {% elif meal.teacher_name %}
+                                {{ meal.teacher_name }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h1>Gift Card Signup</h1>
+        <table class="container table table-striped w-50 table-bordered">
+            <thead>
+                <th>Gift Card Name</th>
+                <th>Drop-off Date</th>
+                <th>
+                    {% if today <= dates.teacher_end %}
+                        Signup
+                    {% else %}
+                        Teacher Signed Up
+                    {% endif %}
+                </th>
+            </thead>
+            <tbody>
+                {% for gc in gcs %}
+                    <tr>
+                        <td>{{ gc.gc_name }}</td>
+                        <td>{{ gc.date.strftime("%b") }} {{ gc.date.day }}</td>
+                        <td>
+                            {% if today <= dates.teacher_end %}
+                                {% if gc.teacher_name is none %}
+                                    <form action="/teachers/reward-signup" method="POST" class="container">
+                                        <input type="text" name="name" required placeholder="Full Name" autocomplete="name" class="form-control mb-1">
+                                        <input type="email" name="email" required placeholder="Email" autocomplete="email" class="form-control mb-2">
+                                        <input type="hidden" name="id" value="{{ gc.gc_id }}">
+                                        <input type="hidden" name="reward_type" value="gift_cards">
+                                        <button type="submit" class="btn btn-primary">Sign up</button>
+                                    </form>
+                                {% else %}
+                                    Signed up for by {{ gc.teacher_name }}.
+                                {% endif %}
+                            {% elif gc.teacher_name %}
+                                {{ gc.teacher_name }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h1>Signups not yet available</h1>
+        <p class="fs-5">Sorry, teacher reward signups are not yet open. Come back later.</p>
+    {% endif %}
+{% endblock %}

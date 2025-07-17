@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block body %}
+    <h1>Recipes</h1>
+    <p class="fs-4">Here are some recipes other volunteers have compiled. Feel free to pick one from below or <a href="/recipes/upload">upload your own</a>.</p>
+    <ul class="text-start fs-3">
+    {% for recipe in recipes %}
+        <li><a href="/recipes/{{ recipe.id }}">{{recipe.recipe_name}}</a> ({{ recipe.volunteer_name }})</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

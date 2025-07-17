@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block body %}
+    <h1>Admin</h1>
+    <a href="/admin/logout" class="btn btn-danger">Log out</a>
+    <a href="/admin/volunteers" class="btn btn-primary">Volunteer List</a>
+    <a href="/admin/set-volunteer-code" class="btn btn-primary">Set Volunteer Code</a>
+    <a href="/admin/set-teacher-code" class="btn btn-primary">Set Teacher Code</a>
+    <a href="/admin/deadlines" class="btn btn-primary">View/Edit Deadlines</a>
+    <a href="/admin/rankings" class="btn btn-primary">View Rankings</a>
+    <a href="/admin/send-emails" class="btn btn-warning">Send Emails</a>
+    <div class="mt-3 mb-3">
+        <form action="/admin/push-to-teachers" method="POST">
+            <button type="submit" name="push" class="btn btn-warning" id="push-teachers">Push to Teachers</button>
+        </form>
+    </div>
+    <h3 class="mb-3">Add/edit <a href="/admin/override-signups">signups</a> past deadline</h3>
+    <h3>Edit/delete <a href="/admin/recipes">recipes</a></h3>
+    <script>
+        const push = document.querySelector("form");
+        push.addEventListener('submit', () => {
+            alert('Pushed to teachers.')
+        })
+    </script>
+{% endblock %}

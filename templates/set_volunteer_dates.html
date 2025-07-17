@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Deadlines
+{% endblock %}
+
+{% block body %}
+    <h1>Set Volunteer Deadline and Dropoff Dates</h1>
+    <form method="POST" action="/admin/deadlines/set" class="container" id="volunteer-date-form">
+        <div class="mb-3">
+            <label for="month" class="form-label">Month</label>
+            <input type="month" id="month" name="month" required value="{{ next_month }}" class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="volunteer-deadline" class="form-label">Volunteer Deadline</label>
+            <input type="date" id="volunteer-deadline" name="deadline" required class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="range-start" class="form-label">Drop-off Start</label>
+            <input type="date" id="range-start" name="range_start" required class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="range-end" class="form-label">Drop-off End</label>
+            <input type="date" id="range-end" name="range_end" required class="form-control"> 
+        </div>
+        <button type="submit" class="btn btn-primary">Update Dates</button>
+    </form>
+    <script>
+        const startInput = document.getElementById('range-start');
+        const endInput = document.getElementById('range-end');
+        startInput.addEventListener('change', () => {
+            endInput.min = startInput.value;
+            if (endInput.value && endInput.value < startInput.value) {
+                endInput.value = startInput.value;
+            }
+        });
+        const month = document.getElementById('month');
+        document.getElementById('range-start').value = month.value + "-01";
+        document.getElementById('range-end').value = month.value + "-01";
+        document.getElementById('volunteer-deadline').value = month.value + "-01";
+        month.addEventListener('change', () => {
+            document.getElementById('range-start').value = month.value + "-01";
+            document.getElementById('range-end').value = month.value + "-01";
+            document.getElementById('volunteer-deadline').value = month.value + "-01";
+        })
+    </script>
+{% endblock %}

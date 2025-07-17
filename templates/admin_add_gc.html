@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Add Gift Card
+{% endblock %}
+
+{% block body %}
+        <h1>Gift Card Signup</h1>
+        <p>Note: Recommended minimum gift card amount is $25.</p>
+        <form method="POST" action="/admin/add-gc" class="container" id="volunteer-form">
+                <div class="mb-3">
+                    <label for="name">Volunteer Name</label>
+                    <select name="name" class="form-select" id="name" required>
+                        <option value="" selected disabled>Name</option>
+                        {% for volunteer in volunteers %}
+                            <option value="{{ volunteer.name }}">{{ volunteer.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="gc-name">Name of Gift Card</label>
+                    <input type="text" name="gc_name" class="form-control" required placeholder="Amazon, Target, etc."autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="date">Drop-off Date</label>
+                    <input type="date" name="date" class="form-control" id="date" required>
+                </div>
+                <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
+        </form>
+{% endblock %}

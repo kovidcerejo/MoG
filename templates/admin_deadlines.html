@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    View Deadlines
+{% endblock %}
+
+{% block body %}
+    <h1>View Deadlines</h1>
+    <a href="/admin/deadlines/set" class="btn btn-primary mb-3">Add deadlines for new month</a>
+    <table class="container table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Volunteer Start</th>
+                <th>Volunteer End</th>
+                <th>Dropoff Start</th>
+                <th>Dropoff end</th>
+                <th>Teacher Start</th>
+                <th>Teacher End</th>
+                <th>Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for deadline in deadlines %}
+                <tr>
+                    <td>{{ deadline.month_year }}</td>
+                    <td>{{ deadline.volunteer_start.strftime('%B') }} {{ deadline.volunteer_start.day }}</td>
+                    <td>{{ deadline.volunteer_end.strftime('%B') }}  {{ deadline.volunteer_end.day }}</td>
+                    <td>{{ deadline.dropoff_start.strftime('%B') }}  {{ deadline.dropoff_start.day }}</td>
+                    <td>{{ deadline.dropoff_end.strftime('%B') }}  {{ deadline.dropoff_end.day }}</td>
+                    <td>
+                        {% if deadline.teacher_start %}
+                            {{ deadline.teacher_start.strftime('%B') }}  {{ deadline.teacher_start.day }}
+                        {% else %}
+                            Not yet set.
+                        {% endif %}
+                    </td>
+                    <td>{{ deadline.teacher_end.strftime('%B') }}  {{ deadline.teacher_end.day }}</td>
+                    <td><a href="/admin/deadlines/edit-{{ deadline.id }}" class="btn btn-warning">Edit/Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

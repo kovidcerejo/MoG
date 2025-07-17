@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Teachers
+{% endblock %}
+
+{% block body %}
+    <h1>Teacher Portal</h1>
+    {% if dates.teacher_start and dates.teacher_start <= today %}
+        {% if today <= dates.teacher_end %}
+            <h3>Sign up to receive a meal or gift card.</h3>
+            <p class="fs-5">Please only sign up for one reward (meal or gift card) in a month.</p>
+            <p class="fs-5">Signup deadline: {{dates.teacher_end.strftime(" %B %d") }}</p>
+            <a href="/teachers/reward-signup" class="btn btn-primary">Reward Signup</a>
+        {% else %}
+            <h3>Signup Deadline Passed</h3>
+            <a href="/teachers/reward-signup" class="btn btn-primary">View Signups</a>
+        {% endif %}
+    {% else %}
+        <h3>Signups not yet available</h3>
+        <p class="fs-5">Sorry, teacher reward signups are not yet open. Come back later.</p>
+    {% endif %}
+    <h3 class="mt-3">Give us <a href="/teachers/give-feedback">feedback/comments</a>!</h3>
+{% endblock %}

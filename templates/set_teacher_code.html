@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Teacher Code
+{% endblock %}
+
+{% block body %}
+    <h1>Set Teacher Code</h1>
+    <p class="fs-4">Current Code: {{ current_code }}</p>
+    <form action="/admin/set-teacher-code" method="POST" class="container" id="set-code-form">
+        <label for="new-code" class="form-label">Enter new code</label>
+        <input type="text" class="form-control mb-3" autofocus autocomplete="off" required name="code" id="new-code">
+        <button type="submit" class="btn btn-primary">Set Code</button>
+    </form>
+{% endblock %}

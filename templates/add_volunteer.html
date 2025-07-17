@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add volunteers
+{% endblock %}
+
+{% block body %}
+    <h1>Add a volunteer</h1>
+    <form action="/admin/volunteers/add" method="POST" class="container" id="admin-volunteer-form">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" autofocus autocomplete="off" name="name" required id="name" class="form-control" placeholder="John Smith">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" autocomplete="off" name="email" required id="email" class="form-control" placeholder="johnsmith@gmail.com">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" autocomplete="off" name="phone" required id="phone" class="form-control" placeholder="123-456-7890">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Add Volunteer</button>
+        </div>
+    </form>
+{% endblock %}

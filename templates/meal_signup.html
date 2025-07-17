@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Volunteer Meal Signup 
+{% endblock %}
+
+{% block body %}
+    {% if date.volunteer_start <= today and today <= date.volunteer_end %}
+        <h1>{{ date.month_year }} Meal Signup</h1>
+        <form method="POST" action="/volunteers/meal-signup" class="container" id="volunteer-form">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Volunteer Name</label>
+                    <select name="name" class="form-select" id="name" required>
+                        <option value="" selected disabled>Name</option>
+                        {% for volunteer in volunteers %}
+                            <option value="{{ volunteer.name }}">{{ volunteer.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="meal-name" class="form-label">Recipe Name</label>
+                    <select name="meal" class="form-select" id="meal-name" required>
+                        <option value="" selected disabled>Recipe Name</option>
+                        {% for recipe in recipes %}
+                            <option value="{{ recipe.name }}">{{ recipe.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Drop-off Date</label>
+                    <input type="date" name="date" class="form-control" id="date" min="{{ start }}" max="{{ end }}" required>
+                </div>
+                <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
+        </form>
+        <p>Need help deciding on a recipe? View recipes created by other volunteers <a href="/recipes">here</a>.</p>
+        <p>Already submitted your meal for this month? Click <a href="/volunteers/rewards">here</a> to view all this month's meals.</p>
+    {% else %}
+        <h1>Signup Deadline Passed</h1>
+        <p class="fs-5">Sorry, the deadline for submitting a signup has passed. You can still signup for next month when it opens.</p>
+        <a href="/volunteers" class="btn btn-primary">Volunteer Home</a>
+    {% endif %}
+{% endblock %}

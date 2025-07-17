@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    All Signups
+{% endblock %}
+
+{% block body %}
+    <h1>All Signups</h1>
+    <p class=fs-5>Not what you're looking for? View <a href="/volunteers/signups">current signups</a></p>
+    <h3>Meals</h3>
+    <table class="container table table-striped w-75 table-bordered">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Meal Name</th>
+                <th>Drop-off Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meal in meals %}
+                <tr>
+                    <td>{{ meal.volunteer_name }}</td>
+                    <td>{{ meal.meal_name }}</td>
+                    <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Gift Cards</h3>
+    <table class="container table table-striped w-75 table-bordered">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Gift Card Name</th>
+                <th>Drop-off Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gc in gcs %}
+                <tr>
+                    <td>{{ gc.volunteer_name }}</td>
+                    <td>{{ gc.gc_name }}</td>
+                    <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

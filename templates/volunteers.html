@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Volunteers
+{% endblock %}
+
+{% block body %}
+    <h1 class="mb-3">Volunteer Portal</h1>
+    {% if date.volunteer_start <= today and today <= date.volunteer_end %}
+        <h3>{{ date.month_year }} Signups</h3>
+        <div class="mb-3">
+            <a href="/volunteers/meal-signup" class="btn btn-primary">Make a meal</a>
+            <a href="/volunteers/gc-signup" class="btn btn-primary">Send a gift card</a>
+        </div>
+    {% endif %}
+    <h3 class="mb-3">View <a href="/volunteers/signups">reward signups</a>.
+    </h3>
+    <h3>View <a href="/recipes">recipes</a> uploaded by volunteers.</h3>
+{% endblock %}

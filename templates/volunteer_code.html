@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Enter Volunteer Code
+{% endblock %}
+
+{% block body %}
+    <h1>Enter volunteer code</h1>
+    <p class="fs-4">*Insert message about where to get code*</p>
+    <form action="/volunteers/enter-code" method="POST" class="container" id="volunteer-code-form">
+        <label for="volunteer-code" class="form-label">Volunteer Code</label>
+        <input type="password" name="code" autofocus autocomplete="off" class="form-control mb-3" id="volunteer-code" required>
+        <button type="submit" class="btn btn-primary">Submit Code</button>
+    </form>
+{% endblock %}

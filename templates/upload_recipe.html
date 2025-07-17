@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Upload Recipe
+{% endblock %}
+
+{% block body %}
+    <h1>Upload your own recipe</h1>
+    <form action="/recipes/upload" method="POST" class="container" id="upload-recipe" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="creator_name" class="form-label">Volunteer Name (for recipe credit)</label>
+            <select name="creator_name" class="form-select" id="creator_name" required>
+                <option selected disabled>Name</option>
+                {% for volunteer in volunteers %}
+                    <option value="{{ volunteer.name }}">{{ volunteer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="recipe_name" class="form-label">Recipe Name</label>
+            <input type="text" autocomplete="off" id="recipe_name" name="recipe_name" class="form-control" placeholder="Recipe Name" required>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients</label>
+            <textarea id="ingredients" class="form-control" name="ingredients" placeholder="List ingredients" required rows="8"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="instructions" class="form-label">Instructions</label>
+            <textarea id="instructions" class="form-control" name="instructions" placeholder="Instructions" required rows="8"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image-upload" class="form-label">Recipe image (optional)</label>
+            <input type="file" id="image-upload" class="form-control" name="image" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Recipe</button>
+    </form>
+{% endblock %}

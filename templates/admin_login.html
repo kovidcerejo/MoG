@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Login
+{% endblock %}
+
+{% block body %}
+    <h1>Admin Login</h1>
+    <p class="fs-4">Not an admin? Go to the <a href="/">homepage</a>.</p>
+    <form action="/admin/login" method="POST" class="container" id="admin-form">
+        <label for="admin-pw" class="form-label">Admin Password</label>
+        <input type="password" name="pw" autofocus autocomplete="off" class="form-control mb-3" id="admin-pw" required>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+{% endblock %}

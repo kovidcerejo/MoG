@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Volunteer List
+{% endblock %}
+
+{% block body %}
+    <h1>Volunteer List</h1>
+    <a href="/admin/volunteers/add" class="btn btn-primary">Add a new volunteer</a>
+    <table class="container table table-striped w-50">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for volunteer in volunteers %}
+            <tr>
+                <td>
+                    <button class="btn btn-danger btn-sm delete-button" data-id="{{ volunteer.id }}">Delete</button>
+                </td>
+                <td>{{ volunteer.name }}</td>
+                <td>{{ volunteer.email }}</td>
+                <td>{{ volunteer.phone }}</td>
+                <td>{{ volunteer.date_added.strftime('%b %Y') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        const buttons = document.querySelectorAll('.delete-button');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const confirmed = confirm("Are you sure you want to delete this volunteer?");
+                if (confirmed) {
+                    fetch("/admin/volunteers/delete", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json'},
+                        body: JSON.stringify({ id: button.dataset.id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert("Failed to delete volunteer.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
