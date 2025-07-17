@@ -8,18 +8,22 @@ from datetime import date, datetime, timedelta
 from calendar import monthrange
 import smtplib
 from email.message import EmailMessage
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "cfbe4bd7a14b04e80181d0ec20237f7f76eebe3f34efc4a1604f35547738e76c"
+app.secret_key = os.getenv("SECRET_KEY")
 
-EMAIL = "mealsofgratitudetesting@gmail.com"
-APP_PASSWORD = "mucd lnli mrzf wywu"
+EMAIL = os.getenv("EMAIL")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
 
 #create function to get new db during each request
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect('meals.db')
+        db_path = os.getenv("DATABASE_URL")
+        db = g._database = sqlite3.connect(db_path)
         db.row_factory = sqlite3.Row
     return db
 
