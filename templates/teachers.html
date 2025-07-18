@@ -10,7 +10,7 @@
         {% if today <= dates.teacher_end %}
             <h3>Sign up to receive a meal or gift card.</h3>
             <p class="fs-5">Please only sign up for one reward (meal or gift card) in a month.</p>
-            <p class="fs-5">Signup deadline: {{dates.teacher_end.strftime(" %B %d") }}</p>
+            <p class="fs-5">Signup deadline: {{ dates.teacher_end.strftime("%B") }} {{ dates.teacher_end.day }}</p>
             <a href="/teachers/reward-signup" class="btn btn-primary">Reward Signup</a>
         {% else %}
             <h3>Signup Deadline Passed</h3>
