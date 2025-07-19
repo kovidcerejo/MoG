@@ -10,13 +10,8 @@
         <p>Note: Recommended minimum gift card amount is $25.</p>
         <form method="POST" action="/volunteers/gc-signup" class="container" id="volunteer-form">
                 <div class="mb-3">
-                    <label for="name">Volunteer Name</label>
-                    <select name="name" class="form-select" id="name" required>
-                        <option value="" selected disabled>Name</option>
-                        {% for volunteer in volunteers %}
-                            <option value="{{ volunteer.name }}">{{ volunteer.name }}</option>
-                        {% endfor %}
-                    </select>
+                    <label for="typeahead-name" class="form-label">Volunteer Name</label>
+                    <input type="text" name="name" id="typeahead-name" required autocomplete="off" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="gc-name">Name of Gift Card</label>
@@ -33,4 +28,41 @@
         <p class="fs-5">Sorry, the deadline for submitting a signup has passed. You can still signup for next month when it opens.</p>
         <a href="/volunteers" class="btn btn-primary">Volunteer Home</a>
     {% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    const volunteers = {{ volunteers | map(attribute='name') | list | tojson | safe }};
+
+    $('#typeahead-name').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'volunteers',
+      source: function (query, syncResults) {
+        const matches = [];
+        const regex = new RegExp(query, 'i');
+
+        volunteers.forEach(volunteer => {
+          if (regex.test(volunteer)) {
+            matches.push(volunteer);
+          }
+        });
+
+        syncResults(matches);
+      }
+    });
+
+    $('#volunteer-form').on('submit', function(e) {
+      const val = $('#typeahead-name').val().trim();
+      if (!volunteers.includes(val)) {
+        e.preventDefault();
+        alert('Please select a valid volunteer name from the list.');
+        $('#typeahead-name').focus();
+      }
+    });
+  });
+</script>
+
 {% endblock %}

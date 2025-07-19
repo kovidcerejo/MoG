@@ -20,6 +20,7 @@
                             <option value="{{ recipe.name }}">{{ recipe.name }}</option>
                         {% endfor %}
                     </select>
+                    <p class="mt-1">Need help? View <a href="/recipes">all recipes</a>.</p>
                 </div>
                 <div class="mb-3">
                     <label for="date" class="form-label">Drop-off Date</label>
@@ -27,8 +28,6 @@
                 </div>
                 <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
         </form>
-        <p>Need help deciding on a recipe? View recipes created by other volunteers <a href="/recipes">here</a>.</p>
-        <p>Already submitted your meal for this month? Click <a href="/volunteers/signups">here</a> to view all this month's meals.</p>
     {% else %}
         <h1>Signup Deadline Passed</h1>
         <p class="fs-5">Sorry, the deadline for submitting a signup has passed. You can still signup for next month when it opens.</p>
