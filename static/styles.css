@@ -1,6 +1,9 @@
 #volunteer-form {
     max-width: 250px;
 }
+#typeahead-name {
+    width: 100% !important;
+}
 #admin-form {
     max-width: 250px;
 }
@@ -37,3 +40,38 @@
     font-family: inherit;
     font-size: inherit;
 }
+.tt-menu {
+  width: 100%;
+  margin-top: 2px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #333;
+  z-index: 1000;
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.tt-suggestion.tt-cursor {
+  background-color: #0097cf;
+  color: #fff;
+}
+
+.tt-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+.tt-highlight {
+  font-weight: 700;
+}
+
+

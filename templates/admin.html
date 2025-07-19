@@ -20,6 +20,8 @@
     </div>
     <h3 class="mb-3">Add/edit <a href="/admin/override-signups">signups</a> past deadline</h3>
     <h3>Edit/delete <a href="/admin/recipes">recipes</a></h3>
+{% endblock %}
+{% block scripts %}
     <script>
         const push = document.querySelector("form");
         push.addEventListener("submit", (event) => {
