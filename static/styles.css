@@ -29,8 +29,11 @@
     max-width: 40%;
 }
 .recipe-image {
-    max-width: 30%;
-    height: auto;
+  max-width: 30%;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 .small-image {
     max-height: 100px;
