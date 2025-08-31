@@ -10,7 +10,8 @@ import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
@@ -22,7 +23,6 @@ APP_PASSWORD = os.getenv("APP_PASSWORD")
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         db_path = os.path.join(BASE_DIR, "meals.db")
         db = g._database = sqlite3.connect(db_path)
         db.row_factory = sqlite3.Row
