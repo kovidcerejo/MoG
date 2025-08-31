@@ -23,7 +23,7 @@
                     <p class="mt-1">Need help? View <a href="/recipes">all recipes</a>.</p>
                 </div>
                 <div class="mb-3">
-                    <label for="date" class="form-label">Drop-off Date</label>
+                    <label for="date" class="form-label">Drop-off Date<br>({{ start_datetime.strftime('%m/%d') }} - {{ end_datetime.strftime('%m/%d') }})</label>
                     <input type="date" name="date" class="form-control" id="date" min="{{ start }}" max="{{ end }}" required>
                 </div>
                 <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
