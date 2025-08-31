@@ -22,7 +22,8 @@ APP_PASSWORD = os.getenv("APP_PASSWORD")
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db_path = os.getenv("DATABASE_URL")
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(BASE_DIR, "meals.db")
         db = g._database = sqlite3.connect(db_path)
         db.row_factory = sqlite3.Row
     return db
