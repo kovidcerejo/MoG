@@ -676,7 +676,7 @@ def set_volunteer_dates():
         range_start = request.form.get("range_start")
         range_end = request.form.get("range_end")
         teacher_end_temp = datetime.strptime(range_start, "%Y-%m-%d").date()
-        teacher_end = teacher_end_temp - timedelta(days=3)
+        teacher_end = teacher_end_temp - timedelta(days=2)
         deadline = request.form.get("deadline")
         query_db("""INSERT INTO deadlines (month_year, volunteer_end, dropoff_start, dropoff_end, teacher_end) 
                  VALUES (?, ?, ?, ?, ?)""", (month_year, deadline, range_start, range_end, teacher_end))
