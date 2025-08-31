@@ -106,6 +106,10 @@ def teacher_code_required():
         if not session.get("teacher_verified") or session.get("teacher_code_version") != current_version:
             return redirect("/teachers/enter-code")
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 @app.route("/volunteers/")
 def volunteers():
     dates_const = query_db("SELECT month_year, volunteer_start, volunteer_end FROM deadlines ORDER BY id DESC LIMIT 1", one=True)
