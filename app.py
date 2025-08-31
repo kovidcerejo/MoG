@@ -299,7 +299,10 @@ def meal_signup():
         recipes = query_db("SELECT name FROM recipes")
         start = query_db("SELECT dropoff_start FROM deadlines ORDER BY id DESC LIMIT 1", one=True)["dropoff_start"]
         end = query_db("SELECT dropoff_end FROM deadlines ORDER BY id DESC LIMIT 1", one=True)["dropoff_end"]
-        return render_template("meal_signup.html", volunteers=volunteers, recipes=recipes, start=start, end=end, today=today, date=date)
+        start_datetime = datetime.strptime(start, '%Y-%m-%d').date()
+        end_datetime = datetime.strptime(end, '%Y-%m-%d').date()
+        return render_template("meal_signup.html", volunteers=volunteers, recipes=recipes, start=start, end=end, today=today, 
+                               date=date, start_datetime=start_datetime, end_datetime=end_datetime)
 
 @app.route("/teachers/")
 def teachers():
