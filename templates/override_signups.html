@@ -14,6 +14,8 @@
                 <th>Volunteer Name</th>
                 <th>Meal Name</th>
                 <th>Drop-off Date</th>
+                <th>Teacher Name</th>
+                <th>Teacher Email</th>
                 <th>Edit/Delete</th>
             </tr>
         </thead>
@@ -23,6 +25,8 @@
                     <td>{{ meal.volunteer_name }}</td>
                     <td><a href="/recipes/{{ meal.recipe_id }}">{{ meal.meal_name }}</a></td>
                     <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
+                    <td>{{ meal.teacher_name if meal.teacher_name else "N/A" }}</td>
+                    <td>{{ meal.teacher_email if meal.teacher_email else "N/A" }}</td>
                     <td>
                         <a href="/admin/edit-meal-{{ meal.meal_id}}" class="btn btn-warning">Edit/Delete</a>
                     </td>
@@ -38,6 +42,8 @@
                 <th>Volunteer Name</th>
                 <th>Gift Card Name</th>
                 <th>Drop-off Date</th>
+                <th>Teacher Name</th>
+                <th>Teacher Email</th>
                 <th>Edit/Delete</th>
             </tr>
         </thead>
@@ -47,6 +53,8 @@
                     <td>{{ gc.volunteer_name }}</td>
                     <td>{{ gc.gc_name }}</td>
                     <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
+                    <td>{{ gc.teacher_name if gc.teacher_name else "N/A" }}</td>
+                    <td>{{ gc.teacher_email if gc.teacher_email else "N/A" }}</td>
                     <td>
                         <a href="/admin/edit-gc-{{ gc.gc_id }}" class="btn btn-warning">Edit/Delete</a>
                     </td>
