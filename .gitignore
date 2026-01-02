@@ -1,3 +1,4 @@
+#gitignore was created by chatgpt to help me ignore all files i needed to not sync to github
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
