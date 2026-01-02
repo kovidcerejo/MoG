@@ -11,17 +11,21 @@
     <table class="container table table-striped w-75 table-bordered">
         <thead>
             <tr>
+                <th>Drop-off Date</th>
                 <th>Volunteer Name</th>
                 <th>Meal Name</th>
-                <th>Drop-off Date</th>
+                <th>Teacher Name</th>
             </tr>
         </thead>
         <tbody>
             {% for meal in meals %}
                 <tr>
-                    <td>{{ meal.volunteer_name }}</td>
-                    <td>{{ meal.meal_name }}</td>
                     <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
+                    <td>{{ meal.volunteer_name }}</td>
+                    <td><a href="/recipes/{{ meal.recipe_id }}">{{ meal.meal_name }}</a></td>
+                    <td>
+                        {{ meal.teacher_name if meal.teacher_name else "N/A"}}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -30,17 +34,19 @@
     <table class="container table table-striped w-75 table-bordered">
         <thead>
             <tr>
+                <th>Drop-off Date</th>
                 <th>Volunteer Name</th>
                 <th>Gift Card Name</th>
-                <th>Drop-off Date</th>
+                <th>Teacher Name</th>
             </tr>
         </thead>
         <tbody>
             {% for gc in gcs %}
                 <tr>
+                    <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
                     <td>{{ gc.volunteer_name }}</td>
                     <td>{{ gc.gc_name }}</td>
-                    <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
+                    <td>{{ gc.teacher_name if gc.teacher_name else "N/A" }}</td>
                 </tr>
             {% endfor %}
         </tbody>

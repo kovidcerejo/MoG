@@ -14,7 +14,12 @@
                 <th>Volunteer Name</th>
                 <th>Meal Name</th>
                 <th>Drop-off Date</th>
-                <th>Edit/Delete</th>
+                {% if date.volunteer_start <= today and today <= date.volunteer_end%}
+                    <th>Edit/Delete</th>
+                {% else %}
+                    <th>Teacher Name</th>
+                    <th>Teacher Email</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -23,12 +28,14 @@
                     <td>{{ meal.volunteer_name }}</td>
                     <td><a href="/recipes/{{ meal.recipe_id }}">{{ meal.meal_name }}</a></td>
                     <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
-                    {% if date.volunteer_start <= today and today <= date.volunteer_end and date.month_year.month == meal.date.month %}
+
+                    {% if date.volunteer_start <= today and today <= date.volunteer_end%}
                         <td>
                             <a href="/volunteers/signups/edit-meal-{{ meal.meal_id}}" class="btn btn-warning">Edit/Delete</a>
                         </td>
                     {% else %}
-                        <td>Past edit deadline</td>
+                        <td>{{ meal.teacher_name if meal.teacher_name else "N/A" }}</td>
+                        <td>{{ meal.teacher_email if meal.teacher_email else "N/A" }}</td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -41,7 +48,12 @@
                 <th>Volunteer Name</th>
                 <th>Gift Card Name</th>
                 <th>Drop-off Date</th>
-                <th>Edit/Delete</th>
+                {% if date.volunteer_start <= today and today <= date.volunteer_end %}
+                    <th>Edit/Delete</th>
+                {% else %}
+                    <th>Teacher Name</th>
+                    <th>Teacher Email</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -50,12 +62,13 @@
                     <td>{{ gc.volunteer_name }}</td>
                     <td>{{ gc.gc_name }}</td>
                     <td>{{ gc.date.strftime('%b') }} {{ gc.date.day }}</td>
-                    {% if date.volunteer_start <= today and today <= date.volunteer_end and date.month_year.month == gc.date.month %}
+                    {% if date.volunteer_start <= today and today <= date.volunteer_end %}
                         <td>
                             <a href="/volunteers/signups/edit-gc-{{ gc.gc_id }}" class="btn btn-warning">Edit/Delete</a>
                         </td>
                     {% else %}
-                        <td>Past edit deadline</td>
+                        <td>{{ gc.teacher_name if gc.teacher_name else "N/A" }}</td>
+                        <td>{{ gc.teacher_email if gc.teacher_email else "N/A" }}</td>
                     {% endif %}
                 </tr>
             {% endfor %}

@@ -138,12 +138,15 @@ def volunteer_signups():
     beg_month = datetime.today().strftime("%Y-%m")
     beg_month = beg_month + "-01"
     meals_const = query_db("""SELECT meals.id AS meal_id, recipes.name AS meal_name, date, volunteers.name 
-                           AS volunteer_name, recipes.id AS recipe_id FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
-                           JOIN recipes ON meals.recipe_id = recipes.id WHERE date >= ? ORDER BY volunteer_name, date""", 
+                           AS volunteer_name, recipes.id AS recipe_id, teachers.name AS teacher_name, 
+                           teachers.email AS teacher_email FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
+                           JOIN recipes ON meals.recipe_id = recipes.id LEFT JOIN teachers ON meals.teacher_id = teachers.id 
+                           WHERE date >= ? ORDER BY volunteer_name, date""", 
                            (beg_month,))
-    gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name 
-                         FROM gift_cards JOIN volunteers ON gift_cards.volunteer_id = volunteers.id WHERE date >= ?
-                         ORDER BY volunteer_name, date""", (beg_month,))
+    gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name, 
+                         teachers.name AS teacher_name, teachers.email AS teacher_email FROM gift_cards JOIN volunteers 
+                         ON gift_cards.volunteer_id = volunteers.id LEFT JOIN teachers ON gift_cards.teacher_id = teachers.id 
+                         WHERE date >= ? ORDER BY volunteer_name, date""", (beg_month,))
     meals = []
     gcs = []
     for row in meals_const:
@@ -171,12 +174,14 @@ def volunteer_signups_all():
         year = today.year - 1
     first = f"{year}-08-01"
     meals_const = query_db("""SELECT meals.id AS meal_id, recipes.name AS meal_name, date, volunteers.name 
-                           AS volunteer_name FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
-                           JOIN recipes ON meals.recipe_id = recipes.id WHERE date >= ? ORDER BY volunteer_name, date""", 
+                           AS volunteer_name, recipes.id AS recipe_id, teachers.name AS teacher_name 
+                           FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id JOIN recipes 
+                           ON meals.recipe_id = recipes.id LEFT JOIN teachers ON meals.teacher_id = teachers.id
+                           WHERE date >= ? ORDER BY date, volunteer_name""", 
                            (first,))
-    gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name 
-                         FROM gift_cards JOIN volunteers ON gift_cards.volunteer_id = volunteers.id WHERE date >= ?
-                         ORDER BY volunteer_name, date""", (first,))
+    gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name, 
+                         teachers.name AS teacher_name FROM gift_cards JOIN volunteers ON gift_cards.volunteer_id = volunteers.id 
+                         LEFT JOIN teachers ON gift_cards.teacher_id = teachers.id WHERE date >= ? ORDER BY date, volunteer_name""", (first,))
     meals = []
     gcs = []
     for row in meals_const:
