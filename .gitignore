@@ -205,3 +205,6 @@ __marimo__/
 
 meals.db
 static/images/recipes/
+.DS_Store
+static/.DS_Store
+static/images/

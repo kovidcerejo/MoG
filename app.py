@@ -406,7 +406,7 @@ def upload_recipe():
                  VALUES (?, ?, ?, ?, ?)""", (recipe_name, ingredients, instructions, creator_id, image_url))
         return redirect("/recipes/")
     else:
-        volunteers = query_db("SELECT name FROM volunteers")
+        volunteers = query_db("SELECT name AS creator_name FROM volunteers")
         return render_template("upload_recipe.html", volunteers=volunteers)
 
 @app.route("/recipes/<int:id>")

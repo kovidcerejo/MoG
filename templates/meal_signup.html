@@ -8,25 +8,25 @@
     {% if date.volunteer_start <= today and today <= date.volunteer_end %}
         <h1>{{ date.month_year }} Meal Signup</h1>
         <form method="POST" action="/volunteers/meal-signup" class="container" id="volunteer-form">
-                <div class="mb-3">
-                    <label for="typeahead-name" class="form-label">Volunteer Name</label>
-                    <input type="text" name="name" id="typeahead-name" required autocomplete="off" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="meal-name" class="form-label">Recipe Name</label>
-                    <select name="meal" class="form-select" id="meal-name" required>
-                        <option value="" selected disabled>Recipe Name</option>
-                        {% for recipe in recipes %}
-                            <option value="{{ recipe.name }}">{{ recipe.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <p class="mt-1">Need help? View <a href="/recipes">all recipes</a>.</p>
-                </div>
-                <div class="mb-3">
-                    <label for="date" class="form-label">Drop-off Date<br>({{ start_datetime.strftime('%m/%d') }} - {{ end_datetime.strftime('%m/%d') }})</label>
-                    <input type="date" name="date" class="form-control" id="date" min="{{ start }}" max="{{ end }}" required>
-                </div>
-                <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
+            <div class="mb-3">
+                <label for="typeahead-name" class="form-label">Volunteer Name</label>
+                <input type="text" name="name" id="typeahead-name" required autocomplete="off" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="meal-name" class="form-label">Recipe Name</label>
+                <select name="meal" class="form-select" id="meal-name" required>
+                    <option value="" selected disabled>Recipe Name</option>
+                    {% for recipe in recipes %}
+                        <option value="{{ recipe.name }}">{{ recipe.name }}</option>
+                    {% endfor %}
+                </select>
+                <p class="mt-1">Need help? View <a href="/recipes">all recipes</a>.</p>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Drop-off Date<br>({{ start_datetime.strftime('%m/%d') }} - {{ end_datetime.strftime('%m/%d') }})</label>
+                <input type="date" name="date" class="form-control" id="date" min="{{ start }}" max="{{ end }}" required>
+            </div>
+            <button type="submit" class="btn align-self-end mb-3 btn-primary">Submit</button>
         </form>
     {% else %}
         <h1>Signup Deadline Passed</h1>

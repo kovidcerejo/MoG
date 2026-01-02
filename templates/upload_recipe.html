@@ -8,13 +8,9 @@
     <h1>Upload your own recipe</h1>
     <form action="/recipes/upload" method="POST" class="container" id="upload-recipe" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="creator_name" class="form-label">Volunteer Name (for recipe credit)</label>
-            <select name="creator_name" class="form-select" id="creator_name" required>
-                <option selected disabled>Name</option>
-                {% for volunteer in volunteers %}
-                    <option value="{{ volunteer.name }}">{{ volunteer.name }}</option>
-                {% endfor %}
-            </select>
+            <label for="typeahead-name" class="form-label">Volunteer Name</label>
+            <br>
+            <input type="text" name="creator_name" id="typeahead-name" required autocomplete="off" class="form-control">
         </div>
         <div class="mb-3">
             <label for="recipe_name" class="form-label">Recipe Name</label>
@@ -34,4 +30,41 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit Recipe</button>
     </form>
+{% endblock %}
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    const volunteers = {{ volunteers | map(attribute='creator_name') | list | tojson | safe }};
+
+    $('#typeahead-name').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'volunteers',
+      source: function (query, syncResults) {
+        const matches = [];
+        const regex = new RegExp(query, 'i');
+
+        volunteers.forEach(volunteer => {
+          if (regex.test(volunteer)) {
+            matches.push(volunteer);
+          }
+        });
+
+        syncResults(matches);
+      }
+    });
+
+    $('#volunteer-form').on('submit', function(e) {
+      const val = $('#typeahead-name').val().trim();
+      if (!volunteers.includes(val)) {
+        e.preventDefault();
+        alert('Please select a valid volunteer name from the list.');
+        $('#typeahead-name').focus();
+      }
+    });
+  });
+</script>
+
 {% endblock %}
