@@ -296,7 +296,7 @@ def meal_signup():
         date["volunteer_end"] = datetime.strptime(date["volunteer_end"], "%Y-%m-%d").date()
         today = datetime.today().date()
         volunteers = query_db("SELECT name FROM volunteers")
-        recipes = query_db("SELECT name FROM recipes")
+        recipes = query_db("SELECT name FROM recipes ORDER BY name")
         start = query_db("SELECT dropoff_start FROM deadlines ORDER BY id DESC LIMIT 1", one=True)["dropoff_start"]
         end = query_db("SELECT dropoff_end FROM deadlines ORDER BY id DESC LIMIT 1", one=True)["dropoff_end"]
         start_datetime = datetime.strptime(start, '%Y-%m-%d').date()
