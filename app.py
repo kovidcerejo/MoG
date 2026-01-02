@@ -138,7 +138,7 @@ def volunteer_signups():
     beg_month = datetime.today().strftime("%Y-%m")
     beg_month = beg_month + "-01"
     meals_const = query_db("""SELECT meals.id AS meal_id, recipes.name AS meal_name, date, volunteers.name 
-                           AS volunteer_name FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
+                           AS volunteer_name, recipes.id AS recipe_id FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
                            JOIN recipes ON meals.recipe_id = recipes.id WHERE date >= ? ORDER BY volunteer_name, date""", 
                            (beg_month,))
     gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name 
@@ -514,7 +514,7 @@ def override_signup():
     beg_month = datetime.today().strftime("%Y-%m")
     beg_month = beg_month + "-01"
     meals_const = query_db("""SELECT meals.id AS meal_id, recipes.name AS meal_name, date, volunteers.name 
-                        AS volunteer_name FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
+                        AS volunteer_name, recipes.id AS recipe_id FROM meals JOIN volunteers ON meals.volunteer_id = volunteers.id 
                         JOIN recipes ON meals.recipe_id = recipes.id WHERE date >= ? ORDER BY volunteer_name, date""", 
                         (beg_month,))
     gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name 

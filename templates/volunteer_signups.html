@@ -21,7 +21,7 @@
             {% for meal in meals %}
                 <tr>
                     <td>{{ meal.volunteer_name }}</td>
-                    <td>{{ meal.meal_name }}</td>
+                    <td><a href="/recipes/{{ meal.recipe_id }}">{{ meal.meal_name }}</a></td>
                     <td>{{ meal.date.strftime('%b') }} {{ meal.date.day }}</td>
                     {% if date.volunteer_start <= today and today <= date.volunteer_end and date.month_year.month == meal.date.month %}
                         <td>
