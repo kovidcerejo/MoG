@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-        <h1>Edit/Delete the meal you signed up for</h1>
+        <h1>Edit/Delete the selected meal</h1>
         <h4>Volunteer Name: {{ meal.volunteer_name }}</h4>
         <form method="POST" action="/admin/edit-meal-{{ meal.meal_id }}" class="container" id="meal-edit-form">
             <div class="mb-3">
