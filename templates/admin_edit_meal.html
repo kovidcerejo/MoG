@@ -23,8 +23,32 @@
                 <label for="date" class="form-label">Drop-off Date</label>
                 <input type="date" name="date" value="{{ meal.date }}" class="form-control" id="date" required>
             </div>
+            <div class="mb-3">
+                <label for="teacher_name" class="form-label">Teacher Name</label>
+                <input type="text" name="teacher_name" value="{{ meal.teacher_name if meal.teacher_name }}" 
+                    class="form-control" placeholder="{{ 'N/A' if not meal.teacher_name }}" id="teacher_name">
+            </div>
+            <div class="mb-3">
+                <label for="teacher_email" class="form-label">Teacher Email</label>
+                <input type="email" name="teacher_email" value="{{ meal.teacher_email if meal.teacher_email}}"
+                    class="form-control" placeholder="{{ 'N/A' if not meal.teacher_email }}" id="teacher_email">
+            </div>
             <input type="hidden" name="id" value="{{ meal.meal_id }}">
             <button type="submit" name="action" value="edit" class="btn mb-3 btn-primary">Confirm Edit</button>
             <button type="submit" name="action" value="delete" class="btn btn-danger">Delete Signup</button>
         </form>
+{% endblock %}
+{% block scripts %}
+    <script>
+    document.getElementById("meal-edit-form").addEventListener("submit", function(event) {
+        const name = document.getElementById("teacher_name").value.trim();
+        const email = document.getElementById("teacher_email").value.trim();
+
+        // Check rule: either both empty or both filled
+        if ((name && !email) || (!name && email)) {
+            alert("Please fill in both Teacher Name and Email, or leave both empty.");
+            event.preventDefault(); // stop form submission
+        }
+    });
+    </script>
 {% endblock %}

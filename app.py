@@ -562,13 +562,20 @@ def admin_edit_meal(mealid):
         elif action == "edit":
             date = request.form.get("date")
             recipe_id = request.form.get("recipe_id")
+            teacher_name = request.form.get("teacher_name")
+            teacher_email = request.form.get("teacher_email")
+            if teacher_name and teacher_email:
+                query_db("INSERT OR IGNORE INTO teachers (name, email) VALUES (?, ?)", (teacher_name, teacher_email))
+                teacher_id = query_db("SELECT id FROM teachers WHERE name = ? AND email = ?", (teacher_name, teacher_email), one=True)["id"]
+                query_db("UPDATE meals SET teacher_id = ? WHERE id = ?", (teacher_id, id))
             query_db("UPDATE meals SET date = ?, recipe_id = ? WHERE id = ?", (date, recipe_id, id))
         return redirect("/admin/override-signups")
     else:
         meal_const = query_db("""SELECT meals.id AS meal_id, meals.date AS date, 
                             volunteers.name AS volunteer_name, recipes.name AS recipe_name,
-                            recipes.id AS recipe_id FROM meals JOIN recipes ON meals.recipe_id = recipes.id
-                            JOIN volunteers ON meals.volunteer_id = volunteers.id WHERE meals.id = ?""", 
+                            recipes.id AS recipe_id, teachers.name AS teacher_name, teachers.email AS teacher_email 
+                            FROM meals JOIN recipes ON meals.recipe_id = recipes.id JOIN volunteers ON meals.volunteer_id 
+                            = volunteers.id LEFT JOIN teachers ON teachers.id = meals.teacher_id WHERE meals.id = ?""", 
                             (mealid,), one=True)
         
         if not meal_const:
@@ -589,13 +596,19 @@ def admin_edit_gc(gcid):
         elif action == "edit":
             date = request.form.get("date")
             gc_name = request.form.get("gc_name")
+            teacher_name = request.form.get("teacher_name")
+            teacher_email = request.form.get("teacher_email")
+            if teacher_name and teacher_email:
+                query_db("INSERT OR IGNORE INTO teachers (name, email) VALUES (?, ?)", (teacher_name, teacher_email))
+                teacher_id = query_db("SELECT id FROM teachers WHERE name = ? AND email = ?", (teacher_name, teacher_email), one=True)["id"]
+                query_db("UPDATE gift_cards SET teacher_id = ? WHERE id = ?", (teacher_id, id))
             query_db("UPDATE gift_cards SET name = ?, date = ? WHERE id = ?", (gc_name, date, id))
         return redirect("/admin/override-signups")
     else:
-        gc_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, 
-                      gift_cards.date AS date, volunteers.name AS volunteer_name 
-                      FROM gift_cards JOIN volunteers ON gift_cards.volunteer_id = 
-                      volunteers.id WHERE gift_cards.id = ?""", (gcid,), one=True)
+        gc_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, gift_cards.date AS date, 
+                            volunteers.name AS volunteer_name, teachers.name AS teacher_name, teachers.email AS teacher_email
+                            FROM gift_cards JOIN volunteers ON gift_cards.volunteer_id = volunteers.id LEFT JOIN teachers 
+                            ON teachers.id = gift_cards.teacher_id WHERE gift_cards.id = ?""", (gcid,), one=True)
         if not gc_const:
             return redirect("/admin/override-signups")
         gc = dict(gc_const)
@@ -615,8 +628,8 @@ def admin_add_meal():
                   (recipe_id, date, volunteer_id))
         return redirect("/admin/override-signups")
     else:
-        volunteers = query_db("SELECT name FROM volunteers")
-        recipes = query_db("SELECT name FROM recipes")
+        volunteers = query_db("SELECT name FROM volunteers ORDER BY name")
+        recipes = query_db("SELECT name FROM recipes ORDER BY name")
         return render_template("admin_add_meal.html", volunteers=volunteers, recipes=recipes)
     
 @app.route("/admin/add-gc", methods=["GET", "POST"])
@@ -629,7 +642,7 @@ def admin_add_gc():
         query_db("INSERT INTO gift_cards (name, date, volunteer_id) VALUES (?, ?, ?)", (gc_name, date, volunteer_id))
         return redirect("/admin/override-signups")
     else:
-        volunteers = query_db("SELECT name FROM volunteers")
+        volunteers = query_db("SELECT name FROM volunteers ORDER BY name")
         return render_template("admin_add_gc.html", volunteers=volunteers)
 
 @app.route("/admin/recipes")
