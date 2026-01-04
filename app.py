@@ -9,6 +9,7 @@ from calendar import monthrange
 import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
+import re
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
@@ -422,7 +423,20 @@ def recipe(id):
                       (id,), one=True)
     if not recipe:
         return redirect("/recipes/")
-    return render_template("recipe.html", recipe=recipe)
+    def clean_text(text):
+        if not text:
+            return ""
+        cleaned_lines = []
+        for line in text.splitlines():
+            line = re.sub(r'^\s*(?:[\-\*\•]|\d+\.)\s*', '', line)
+            line = re.sub(r'[^\w\s.,()-]', '', line)
+            if line.strip():
+                cleaned_lines.append(line)
+        return "\n".join(cleaned_lines)
+    recipe_clean = dict(recipe)
+    recipe_clean["cleaned_ingredients"] = clean_text(recipe_clean["ingredients"])
+    recipe_clean["cleaned_instructions"] = clean_text(recipe_clean["instructions"])
+    return render_template("recipe.html", recipe=recipe_clean)
 
 @app.route("/admin/",)
 def admin():
@@ -659,7 +673,7 @@ def admin_edit_recipe(recipeid):
         return redirect("/admin/recipes")
     else:
         recipe = query_db("""SELECT id, name, ingredients, instructions, image_url FROM recipes
-                          WHERE id = ?""", (recipeid,), one=True)
+                          WHERE recipes.id = ?""", (recipeid,), one=True)
         if not recipe:
             return redirect("/admin/recipes")
         return render_template("admin_edit_recipe.html", recipe=recipe)

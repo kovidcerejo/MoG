@@ -5,13 +5,34 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ recipe.recipe_name }}</h1>
-    <p class="fs-5">Submitted by: {{ recipe.volunteer_name }}<p>
-    {% if recipe.image_url %}
-        <img src="{{ url_for('static', filename=recipe.image_url) }}" class="recipe-image">
-    {% endif %}
-    <h3>Ingredients</h3>
-    <pre class="inherit">{{ recipe.ingredients }}</pre>
-    <h3>Instructions</h3>
-    <pre class="inherit">{{ recipe.instructions }}</pre>
+<div class="container py-5">
+    <div class="mx-auto" style="max-width: 800px;">
+        <h1>{{ recipe.recipe_name }}</h1>
+        <p class="fs-5 text-muted">Submitted by: {{ recipe.volunteer_name }}</p>
+        {% if recipe.image_url %}
+            <div class="text-center mb-4">
+                <img src="{{ url_for('static', filename=recipe.image_url) }}" 
+                     class="img-fluid rounded" 
+                     alt="{{ recipe.recipe_name }}" 
+                     style="max-width: 400px;">
+            </div>
+        {% endif %}
+        <h3>Ingredients</h3>
+        <ul class="text-start fs-5">
+            {% for item in recipe.cleaned_ingredients.split('\n') %}
+                {% if item.strip() %}
+                    <li>{{ item }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <h3>Instructions</h3>
+        <ol class="text-start fs-5">
+            {% for step in recipe.cleaned_instructions.split('\n') %}
+                {% if step.strip() %}
+                    <li>{{ step }}</li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+</div>
 {% endblock %}
