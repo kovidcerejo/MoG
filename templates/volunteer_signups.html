@@ -16,7 +16,7 @@
                 <th>Drop-off Date</th>
                 {% if date.volunteer_start <= today and today <= date.volunteer_end%}
                     <th>Edit/Delete</th>
-                {% else %}
+                {% elif date.teacher_end < today %}
                     <th>Teacher Name</th>
                     <th>Teacher Email</th>
                 {% endif %}
@@ -33,7 +33,7 @@
                         <td>
                             <a href="/volunteers/signups/edit-meal-{{ meal.meal_id}}" class="btn btn-warning">Edit/Delete</a>
                         </td>
-                    {% else %}
+                    {% elif date.teacher_end < today %}
                         <td>{{ meal.teacher_name if meal.teacher_name else "N/A" }}</td>
                         <td>{{ meal.teacher_email if meal.teacher_email else "N/A" }}</td>
                     {% endif %}
@@ -50,7 +50,7 @@
                 <th>Drop-off Date</th>
                 {% if date.volunteer_start <= today and today <= date.volunteer_end %}
                     <th>Edit/Delete</th>
-                {% else %}
+                {% elif date.teacher_end < today %}
                     <th>Teacher Name</th>
                     <th>Teacher Email</th>
                 {% endif %}
@@ -66,7 +66,7 @@
                         <td>
                             <a href="/volunteers/signups/edit-gc-{{ gc.gc_id }}" class="btn btn-warning">Edit/Delete</a>
                         </td>
-                    {% else %}
+                    {% elif date.teacher_end < today %}
                         <td>{{ gc.teacher_name if gc.teacher_name else "N/A" }}</td>
                         <td>{{ gc.teacher_email if gc.teacher_email else "N/A" }}</td>
                     {% endif %}
