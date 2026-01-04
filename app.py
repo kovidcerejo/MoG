@@ -384,7 +384,7 @@ def teachers_reward_signup():
 @app.route("/recipes/")
 def recipes():
     recipes = query_db("""SELECT recipes.id, recipes.name AS recipe_name, volunteers.name 
-                       AS volunteer_name FROM recipes JOIN volunteers 
+                       AS volunteer_name, image_url FROM recipes JOIN volunteers 
                        ON recipes.creator_id = volunteers.id ORDER BY recipe_name""")
     return render_template("recipes.html", recipes=recipes)
 

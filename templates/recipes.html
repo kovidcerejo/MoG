@@ -5,11 +5,28 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Recipes</h1>
     <p class="fs-4">Pick a recipe from below or <a href="/recipes/upload">upload your own</a>.</p>
-    <ul class="text-start fs-3">
-    {% for recipe in recipes %}
-        <li><a href="/recipes/{{ recipe.id }}">{{recipe.recipe_name}}</a> ({{ recipe.volunteer_name }})</li>
-    {% endfor %}
-    </ul>
+
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
+        {% for recipe in recipes %}
+        <div class="col">
+            <div class="card h-100 d-flex flex-column">
+                <div class="ratio ratio-16x9">
+                    <img src="{{ url_for('static', filename=recipe.image_url if recipe.image_url else 'images/MoG_logo.PNG') }}"
+                         class="card-img-top"
+                         style="object-fit: cover;">
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">
+                        <a href="/recipes/{{ recipe.id }}">{{ recipe.recipe_name }}</a>
+                    </h5>
+                    <p class="card-text">{{ recipe.volunteer_name }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
