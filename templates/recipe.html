@@ -10,11 +10,9 @@
         <h1>{{ recipe.recipe_name }}</h1>
         <p class="fs-5 text-muted">Submitted by: {{ recipe.volunteer_name }}</p>
         {% if recipe.image_url %}
-            <div class="text-center mb-4">
+            <div class="d-flex justify-content-center mb-4">
                 <img src="{{ url_for('static', filename=recipe.image_url) }}" 
-                     class="img-fluid rounded" 
-                     alt="{{ recipe.recipe_name }}" 
-                     style="max-width: 400px;">
+                     class="img-fluid rounded">
             </div>
         {% endif %}
         <h3>Ingredients</h3>
