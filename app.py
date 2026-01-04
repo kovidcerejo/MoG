@@ -374,7 +374,7 @@ def teachers_reward_signup():
             meals.append(meal)
         gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, teachers.name AS teacher_name
                              FROM gift_cards LEFT JOIN teachers ON gift_cards.teacher_id = teachers.id WHERE date >= ? AND date <= ?
-                             ORDER BY gift_cards.name""", (start_date, end_date))
+                             AND NOT hidden ORDER BY gift_cards.name""", (start_date, end_date))
         gcs = []
         for row in gcs_const:
             gc = dict(row)
