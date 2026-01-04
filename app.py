@@ -576,7 +576,7 @@ def admin_edit_meal(mealid):
         else:
             meal = dict(meal_const)
             meal["date"] = datetime.strptime(meal["date"], "%Y-%m-%d").date()
-            recipes = query_db("SELECT name, id FROM recipes")
+            recipes = query_db("SELECT name, id FROM recipes ORDER BY name")
             return render_template("admin_edit_meal.html", meal=meal, recipes=recipes)
 
 @app.route("/admin/edit-gc-<int:gcid>", methods=["GET", "POST"])
