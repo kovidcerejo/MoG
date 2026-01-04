@@ -635,7 +635,7 @@ def admin_add_gc():
 @app.route("/admin/recipes")
 def admin_recipes():
     recipes = query_db("""SELECT recipes.id, recipes.name AS recipe_name, volunteers.name 
-                       AS volunteer_name FROM recipes JOIN volunteers 
+                       AS volunteer_name, image_url FROM recipes JOIN volunteers 
                        ON recipes.creator_id = volunteers.id ORDER BY recipe_name""")
     return render_template("admin_recipes.html", recipes=recipes)
 
