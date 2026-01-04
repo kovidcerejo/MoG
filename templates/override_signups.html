@@ -44,6 +44,7 @@
                 <th>Drop-off Date</th>
                 <th>Teacher Name</th>
                 <th>Teacher Email</th>
+                <th>Hidden?</th>
                 <th>Edit/Delete</th>
             </tr>
         </thead>
@@ -56,10 +57,45 @@
                     <td>{{ gc.teacher_name if gc.teacher_name else "N/A" }}</td>
                     <td>{{ gc.teacher_email if gc.teacher_email else "N/A" }}</td>
                     <td>
+                        <div class="form-check form-switch d-flex justify-content-center">
+                                <input class="form-check-input gc-switch" type="checkbox" role="switch"  
+                                data-gc-id="{{ gc.gc_id }}"{% if gc.hidden %}checked{% endif %}>
+                        </div>
+                    </td>
+                    <td>
                         <a href="/admin/edit-gc-{{ gc.gc_id }}" class="btn btn-warning">Edit/Delete</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+{% block scripts %}
+    <script>
+        document.querySelectorAll(".gc-switch").forEach(switchEl => {
+            switchEl.addEventListener("change", function () {
+                const gcId = this.dataset.gcId
+                fetch("/admin/toggle-gc-visibility", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        gc_id: gcId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert("Failed to hide GC.");
+                        this.checked = !this.checked;
+                    }
+                })
+                .catch(() => {
+                    alert("Server error. Failed to hide GC.");
+                    this.checked = !this.checked;
+                });
+            });
+        })
+    </script>
 {% endblock %}

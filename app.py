@@ -492,6 +492,13 @@ def delete_volunteer():
     query_db("DELETE FROM volunteers WHERE id = ?", (id,))
     return jsonify(success=True)
 
+@app.route("/admin/toggle-gc-visibility", methods=["POST"])
+def toggle_gc_visibility():
+    data = request.get_json()
+    gc_id = data.get("gc_id")
+    query_db("UPDATE gift_cards SET hidden = NOT hidden WHERE id = ?", (gc_id,))
+    return jsonify(success=True)
+
 @app.route("/admin/logout")
 def logout():
     session.clear()
@@ -538,7 +545,7 @@ def override_signup():
                         LEFT JOIN teachers ON meals.teacher_id = teachers.id WHERE date >= ? ORDER BY volunteer_name, date""", 
                         (beg_month,))
     gcs_const = query_db("""SELECT gift_cards.id AS gc_id, gift_cards.name AS gc_name, date, volunteers.name AS volunteer_name, 
-                        teachers.name AS teacher_name, teachers.email AS teacher_email FROM gift_cards JOIN volunteers 
+                        teachers.name AS teacher_name, teachers.email AS teacher_email, hidden FROM gift_cards JOIN volunteers 
                         ON gift_cards.volunteer_id = volunteers.id LEFT JOIN teachers ON gift_cards.teacher_id = teachers.id WHERE date >= ? ORDER BY volunteer_name, date""", (beg_month,))
     meals = []
     gcs = []
