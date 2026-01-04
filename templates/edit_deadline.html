@@ -23,6 +23,14 @@
             <label for="range-end" class="form-label">Drop-off End</label>
             <input type="date" id="range-end" name="range_end" value="{{ deadline.dropoff_end }}" required class="form-control"> 
         </div>
+        <div class="mb-3">
+            <label for="teacher-start" class="form-label">Teacher Start</label>
+            <input type="date" id="teacher-start" name="teacher_start" value="{{ deadline.teacher_start }}" required class="form-control"> 
+        </div>
+        <div class="mb-3">
+            <label for="teacher-end" class="form-label">Teacher End</label>
+            <input type="date" id="teacher-end" name="teacher_end" value="{{ deadline.teacher_end }}" required class="form-control"> 
+        </div>
         <button type="submit" name="action" value="edit" class="btn btn-warning mb-2">Update Dates</button>
         <button type="submit" name="action" value="delete" class="btn btn-danger">Delete Month's Deadlines</button>
     </form>

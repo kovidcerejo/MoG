@@ -756,8 +756,11 @@ def edit_deadline(id):
         range_start = request.form.get("range_start")
         range_end = request.form.get("range_end")
         deadline = request.form.get("deadline")
+        teacher_start = request.form.get("teacher_start")
+        teacher_end = request.form.get("teacher_end")
         query_db("""UPDATE deadlines SET month_year = ?, volunteer_end = ?, dropoff_start = ?, 
-                 dropoff_end = ? WHERE id = ?""", (month_year, deadline, range_start, range_end, id))
+                 dropoff_end = ?, teacher_start = ?, teacher_end = ? WHERE id = ?""", 
+                 (month_year, deadline, range_start, range_end, teacher_start, teacher_end, id))
         return redirect("/admin/deadlines/")
     else:
         deadline_const = query_db("SELECT * FROM deadlines WHERE id = ?", (id,), one=True)
