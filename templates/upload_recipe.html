@@ -56,7 +56,7 @@
       }
     });
 
-    $('#volunteer-form').on('submit', function(e) {
+    $('#upload-recipe').on('submit', function(e) {
       const val = $('#typeahead-name').val().trim();
       if (!volunteers.includes(val)) {
         e.preventDefault();
