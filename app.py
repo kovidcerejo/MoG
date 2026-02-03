@@ -269,7 +269,7 @@ def edit_gc(gcid):
 @app.route("/volunteers/gc-signup", methods=["GET", "POST"])
 def gc_signup():
     if request.method == "POST":
-        volunteer_name = request.form.get("name")
+        volunteer_name = request.form.get("name").strip()
         gc_name = request.form.get("gc_name")
         date = request.form.get("date")
         volunteer_id = query_db("SELECT id FROM volunteers WHERE name = ?", (volunteer_name,), one=True)["id"]
@@ -289,7 +289,7 @@ def gc_signup():
 @app.route("/volunteers/meal-signup", methods=["GET", "POST"])
 def meal_signup():
     if request.method == "POST":
-        volunteer_name = request.form.get("name")
+        volunteer_name = request.form.get("name").strip()
         meal_name = request.form.get("meal")
         recipe_id = query_db("SELECT id FROM recipes WHERE name = ?", (meal_name,), one=True)["id"]
         date = request.form.get("date")
