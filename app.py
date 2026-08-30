@@ -674,7 +674,7 @@ def admin_edit_recipe(recipeid):
             if image and image.filename:
                 filename = secure_filename(image.filename)
                 filename = f"{int(time.time())}_{filename}"
-                save_path = os.path.join("static", "images", "recipes", filename)
+                save_path = os.path.join(BASE_DIR, "static", "images", "recipes", filename)
                 image.save(save_path)
                 old_url = query_db("SELECT image_url FROM recipes WHERE id = ?", (recipeid,), one=True)["image_url"]
                 if old_url:
